@@ -9,14 +9,21 @@
 #include <string.h>
 #include "particle.h"
 
+sfVector2f rand_vector(int disp);
+
+float set_lives(float a, float limit)
+{
+	if (a > limit)
+		return (a - limit);
+	return (a);
+}
+
 particles *create_particles(size_t size, sfColor color, bool inf, bool grav)
 {
 	particles *system = malloc(sizeof(particles));
 
 	system->vertex    = calloc(size * 4, sizeof(sfVertex));
 	system->speed     = calloc(size, sizeof(sfVector2f));
-	for (int i = 0; i < size; ++i)
-		system->speed[i] = (sfVector2f){0, 0};
 	system->color	  = color;
 	system->size      = size;
 	system->lifes     = calloc(size, sizeof(float));
@@ -24,7 +31,13 @@ particles *create_particles(size_t size, sfColor color, bool inf, bool grav)
 	system->infinite  = inf;
 	system->gravity   = grav;
 	system->pos	  = (sfVector2f){0, 0};
-	system->size_part = 10;
+	system->size_part = 5;
+	for (int i = 0; i < system->size; ++i) {
+		set_particles(system, rand_vector(10), 10, i);
+		system->speed[i] = rand_vector(30);
+		system->lifes[i] = set_lives(i * 0.005, 1);
+		printf("i: %f\n", system->lifes[i]);
+	}
 	return (system);
 }
 
@@ -37,6 +50,8 @@ void reset_particles(particles *this, size_t i)
 	(sfVector2f){this->pos.x + this->size_part, this->pos.y + this->size_part};
 	this->vertex[i * 4 + 3].position = 
 	(sfVector2f){this->pos.x, this->pos.y + this->size_part};
+	for (int x = 0; x < 4; ++x)
+		this->speed[i] = rand_vector(30);
 	this->lifes[i] = 0;
 }
 

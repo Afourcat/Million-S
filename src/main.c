@@ -19,6 +19,9 @@ int loop(sfRenderWindow *win, particles *system)
 		while (sfRenderWindow_pollEvent(win, &event)) {
 			if (event.type == sfEvtClosed) {
 				sfRenderWindow_close(win);
+			} else if (event.type == sfEvtMouseMoved) {
+				system->pos =
+				(sfVector2f){event.mouseMove.x, event.mouseMove.y};
 			}
 		}
 		sfRenderWindow_clear(win, sfBlack);
@@ -37,10 +40,8 @@ int main(int argc, char *argv[])
 	sfRenderWindow_create(mode, "Particle", sfResize | sfClose, NULL);
 	
 	sfRenderWindow_setFramerateLimit(win, 60);
-	particles *part = create_particles(100, sfBlue, true, true);
-	part->pos = (sfVector2f){100, 100};
-	for (int i = 0; i < part->size; ++i) 
-		set_particles(part, (sfVector2f){rand() % 10 - 5, rand() % 10 - 5}, 10, i);
+	particles *part = create_particles(2000, sfRed, true, true);
+	part->pos = (sfVector2f){500, 500};
 	loop(win, part);
 	return(0);
 }

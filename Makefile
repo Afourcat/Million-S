@@ -6,7 +6,8 @@ INC	=	./inc
 CC	=	gcc
 
 SRC	=	$(SRC_DIR)/main.c	\
-		$(SRC_DIR)/particles.c
+		$(SRC_DIR)/particles.c	\
+		$(SRC_DIR)/utils.c
 
 OBJS	=	$(SRC:.c=.o)
 
