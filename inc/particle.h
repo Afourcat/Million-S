@@ -24,7 +24,7 @@ typedef struct part_s {
 	uint size;
 	int size_part;
 	bool infinite;
-	bool gravity;
+	float gravity;
 } particles;
 
 void update_particles(particles *system, float delta_time);

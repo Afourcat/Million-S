@@ -11,7 +11,7 @@ SRC	=	$(SRC_DIR)/main.c	\
 
 OBJS	=	$(SRC:.c=.o)
 
-CFLAGS	=	-I $(INC) -g
+CFLAGS	=	-I $(INC) -g -lm
 
 LD_FLAGS=	-l c_graph_prog
 
@@ -23,7 +23,7 @@ $(NAME):	$(OBJS)
 		$(CC) -o $@ $(OBJS) $(LD_FLAGS)
 
 %.o:		%.c
-		printf "$< ==>> $@\n"
+		printf "$< => $@\n"
 		$(CC) -o $@ -c $< $(CFLAGS) $(LD_FLAGS)
 
 clean:
