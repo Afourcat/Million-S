@@ -11,27 +11,35 @@ SRC	=	$(SRC_DIR)/main.c	\
 
 OBJS	=	$(SRC:.c=.o)
 
-CFLAGS	=	-I $(INC) -g -lm
+CFLAGS	=	-I $(INC) -Wall -Wextra
 
-LD_FLAGS=	-l c_graph_prog
+LD_FLAGS=	-l c_graph_prog -l m
 
 NAME 	?=	particle
+
+debug:		CFLAGS += -g
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-		$(CC) -o $@ $(OBJS) $(LD_FLAGS)
+		@$(CC) -o $@ $(OBJS) $(LD_FLAGS)
+
+debug:		fclean $(call deb_print) $(NAME)
 
 %.o:		%.c
-		printf "$< => $@\n"
-		$(CC) -o $@ -c $< $(CFLAGS) $(LD_FLAGS)
+		@printf "$< => $@\n"
+		@$(CC) -o $@ -c $< $(CFLAGS) $(LD_FLAGS)
 
 clean:
-		rm -rf $(OBJS)
+		@rm -rf $(OBJS)
 
 fclean:		clean
-		rm -rf $(NAME)
+		@rm -rf $(NAME)
 	
 re:		fclean all
 
 .PHONY: clean all fclean re
+
+define deb_print
+	@printf "DEBUG MODE"
+endef

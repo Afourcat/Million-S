@@ -14,6 +14,8 @@
 int loop(sfRenderWindow *win, particles *system)
 {
 	sfEvent event;
+	sfShader *shader = sfShader_createFromFile("shaders/simple.vert", "shaders/glow.frag");
+	sfRenderStates state = {sfBlendAlpha, sfTransform_Identity, NULL, shader};
 
 	while (sfRenderWindow_isOpen(win)) {
 		while (sfRenderWindow_pollEvent(win, &event)) {
@@ -26,7 +28,7 @@ int loop(sfRenderWindow *win, particles *system)
 		}
 		sfRenderWindow_clear(win, sfBlack);
 		update_particles(system, 0.016);
-		draw_particles(system, win);
+		draw_particles(system, win, &state);
 		sfRenderWindow_display(win);
 	}
 	return (0);
@@ -38,9 +40,9 @@ int main(int argc, char *argv[])
 	sfVideoMode mode = {WIDTH, HEIGHT, 32};
 	sfRenderWindow *win = 
 	sfRenderWindow_create(mode, "Particle", sfResize | sfClose, NULL);
-	
+
 	sfRenderWindow_setFramerateLimit(win, 60);
-	particles *part = create_particles(2000, sfRed, true, true);
+	particles *part = create_particles(40000, sfRed, true, true);
 	part->pos = (sfVector2f){500, 500};
 	loop(win, part);
 	return(0);

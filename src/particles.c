@@ -33,9 +33,9 @@ particles *create_particles(size_t size, sfColor color, bool inf, bool grav)
 	system->gravity   = (grav) ? GRAVITY : -GRAVITY ;
 	system->pos	  = (sfVector2f){0, 0};
 	system->size_part = 5;
-	for (int i = 0; i < system->size; ++i) {
-		set_particles(system, rand_vector(30), 10, i);
-		system->speed[i] = rand_vector(30);
+	for (unsigned int i = 0; i < system->size; ++i) {
+		set_particles(system, rand_angle(30), 10, i);
+		system->speed[i] = rand_vector(10);
 		system->lifes[i] = (float)rand() /
 			(float)(RAND_MAX/system->life_time);
 	}
@@ -52,13 +52,13 @@ void reset_particles(particles *this, size_t i)
 	this->vertex[i * 4 + 3].position = 
 	(sfVector2f){this->pos.x, this->pos.y + this->size_part};
 	for (int x = 0; x < 4; ++x)
-		this->speed[i] = rand_vector(30);
+		this->speed[i] = rand_vector(10);
 	this->lifes[i] = 0.0;
 }
 
-void draw_particles(particles *this, sfRenderWindow *win)
+void draw_particles(particles *this, sfRenderWindow *win, sfRenderStates *state)
 {
-	sfRenderWindow_drawPrimitives(win, this->vertex, this->size, sfQuads, NULL);
+	sfRenderWindow_drawPrimitives(win, this->vertex, this->size, sfQuads, state);
 }
 
 void update_particles(particles *system, float delta_time)
@@ -66,7 +66,7 @@ void update_particles(particles *system, float delta_time)
 	float speed_x;
 	float speed_y;
 
-	for (int i = 0; i < system->size; ++i) {
+	for (unsigned int i = 0; i < system->size; ++i) {
 		speed_x = system->speed[i].x;
 		speed_y = system->speed[i].y;
 		if (system->lifes[i] < system->life_time) {

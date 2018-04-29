@@ -28,6 +28,7 @@ typedef struct part_s {
 } particles;
 
 void update_particles(particles *system, float delta_time);
+sfVector2f rand_angle(int disp);
 particles *create_particles(size_t size, sfColor color, bool inf, bool grav);
-void draw_particles(particles *this, sfRenderWindow *win);
+void draw_particles(particles *this, sfRenderWindow *win, sfRenderStates *shader);
 void set_particles(particles *this, sfVector2f speed, int size, size_t id);
