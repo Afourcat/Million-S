@@ -28,15 +28,16 @@ particles *create_particles(size_t size, sfColor color, bool inf, bool grav)
 	system->color	  = color;
 	system->size      = size;
 	system->lifes     = calloc(size, sizeof(float));
-	system->life_time = 10;
+	system->life_time = 1;
 	system->infinite  = inf;
 	system->gravity   = (grav) ? GRAVITY : -GRAVITY ;
 	system->pos	  = (sfVector2f){0, 0};
 	system->size_part = 5;
 	for (int i = 0; i < system->size; ++i) {
-		set_particles(system, rand_vector(10), 10, i);
+		set_particles(system, rand_vector(30), 10, i);
 		system->speed[i] = rand_vector(30);
-		system->lifes[i] = fmod(i * 0.005, system->life_time);
+		system->lifes[i] = (float)rand() /
+			(float)(RAND_MAX/system->life_time);
 	}
 	return (system);
 }

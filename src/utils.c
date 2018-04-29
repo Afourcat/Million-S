@@ -11,7 +11,7 @@
 sfVector2f rand_vector(int disp)
 {
 	sfVector2f vec;
-	vec.x = rand() % disp - (disp / 2);
-	vec.y = rand() % disp - (disp / 2);
+	vec.x = (rand() % disp + 1) - (disp / 2);
+	vec.y = (rand() % disp + 1)- (disp / 2);
 	return (vec);
 }
