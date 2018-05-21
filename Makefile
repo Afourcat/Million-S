@@ -13,6 +13,7 @@ OBJS	=	$(SRC:.c=.o)
 
 CFLAGS	=	-I $(INC) -Wall -Wextra
 
+#Replace c_graph_prog by the name of your csfml shared library
 LD_FLAGS=	-l c_graph_prog -l m
 
 NAME 	?=	particle
