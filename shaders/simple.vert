@@ -1,5 +1,7 @@
 #version 130
 
+uniform sampler2D current;
+
 void main()
 {
         gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;

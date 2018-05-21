@@ -58,7 +58,8 @@ void reset_particles(particles *this, size_t i)
 
 void draw_particles(particles *this, sfRenderWindow *win, sfRenderStates *state)
 {
-	sfRenderWindow_drawPrimitives(win, this->vertex, this->size, sfQuads, state);
+	sfRenderWindow_drawPrimitives(win,
+		this->vertex, this->size, sfQuads, state);
 }
 
 void update_particles(particles *system, float delta_time)
